@@ -1,0 +1,47 @@
+{
+  "name": "parkeringsappen2.0",
+  "version": "1.0.0",
+  "description": "",
+  "main": "expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "tailwind:build": "tailwindcss -i ./tailwind.css -o ./tailwind.output.css --minify && tailwind-rn --input ./tailwind.output.css --output ./tailwind.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@mapbox/polyline": "^1.2.1",
+    "@react-navigation/native": "^7.1.28",
+    "@react-navigation/native-stack": "^7.11.0",
+    "@tanstack/react-query": "^5.90.20",
+    "expo": "^54.0.32",
+    "expo-linear-gradient": "~15.0.8",
+    "expo-location": "~19.0.8",
+    "expo-status-bar": "~3.0.9",
+    "react": "19.1.0",
+    "react-dom": "^19.1.0",
+    "react-native": "0.81.5",
+    "react-native-gesture-handler": "~2.28.0",
+    "react-native-google-places-autocomplete": "^2.6.4",
+    "react-native-map-clustering": "^4.0.0",
+    "react-native-maps": "1.20.1",
+    "react-native-safe-area-context": "~5.6.0",
+    "react-native-screens": "~4.16.0",
+    "react-native-web": "^0.21.0",
+    "tailwind-rn": "^4.2.0",
+    "zustand": "^5.0.10"
+  },
+  "devDependencies": {
+    "@expo/cli": "^54.0.22",
+    "@expo/ngrok": "^4.1.3",
+    "@types/react": "^19.2.9",
+    "@types/react-native": "^0.72.8",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^5.9.3"
+  }
+}

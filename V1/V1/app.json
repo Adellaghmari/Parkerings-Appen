@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "ParkeringsAppen",
+    "slug": "parkeringsappen",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "platforms": ["ios", "android", "web"],
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"]
+  }
+}
