@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Animated, StyleSheet, Text, View } from "react-native";
+import { Animated, Platform, StyleSheet, Text, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Location from "expo-location";
 import { LinearGradient } from "expo-linear-gradient";
@@ -44,13 +44,23 @@ export const AuthScreen = ({ navigation }: Props) => {
 
   const requestPermission = async () => {
     setError(null);
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      setLocationPermission(false);
-      setError("Platsdelning krävs för att visa närliggande parkering.");
+    if (Platform.OS === "web") {
+      setLocationPermission(true);
+      navigation.replace("Map");
       return;
     }
-    setLocationPermission(true);
+
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      const granted = status === "granted";
+      setLocationPermission(granted);
+      if (!granted) {
+        setError("Platsdelning är avstängd. Du kan fortsätta och utforska kartan ändå.");
+      }
+    } catch {
+      setLocationPermission(false);
+      setError("Platsdelning kunde inte hämtas. Du kan fortsätta och utforska kartan ändå.");
+    }
     navigation.replace("Map");
   };
 

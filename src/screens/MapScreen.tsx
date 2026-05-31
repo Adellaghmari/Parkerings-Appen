@@ -13,7 +13,6 @@ import { Legend } from "../components/Legend";
 import { ParkingDetailBottomSheet } from "../components/ParkingDetailBottomSheet";
 import { NearestParkingSheet } from "../components/NearestParkingSheet";
 import { useAppStore } from "../store/useAppStore";
-import { EmptyState } from "../components/EmptyState";
 import { t } from "../utils/i18n";
 import { MapView, Marker, Polygon, Polyline, type Region } from "../platform/maps";
 import { softMapStyle } from "../utils/mapStyle";
@@ -68,12 +67,16 @@ export const MapScreen = ({ navigation }: Props) => {
     if (!hasPermission) {
       return;
     }
-    Location.getCurrentPositionAsync({}).then((position) => {
-      setUserCoords({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
+    Location.getCurrentPositionAsync({})
+      .then((position) => {
+        setUserCoords({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      })
+      .catch(() => {
+        setUserCoords(undefined);
       });
-    });
   }, [hasPermission]);
 
   useEffect(() => {
@@ -166,17 +169,6 @@ export const MapScreen = ({ navigation }: Props) => {
     [zones, selectedZone, setSelectedZone]
   );
 
-  if (!hasPermission) {
-    return (
-      <View style={styles.center}>
-        <EmptyState
-          title="Platsdelning är avstängd"
-          description="Gå till onboarding och slå på platsdelning för att se kartan."
-        />
-      </View>
-    );
-  }
-
   const panel = "rgba(15,23,42,0.88)";
   const onPrimary = "#ffffff";
   const onSecondary = theme === "dark" ? "#e2e8f0" : "#0f172a";
@@ -190,7 +182,7 @@ export const MapScreen = ({ navigation }: Props) => {
         style={StyleSheet.absoluteFillObject}
         initialRegion={stockholmRegion}
         onMapReady={() => setMapLayoutReady(true)}
-        showsUserLocation
+        showsUserLocation={hasPermission}
         showsMyLocationButton={false}
         rotateEnabled={false}
         customMapStyle={mapStyle}
@@ -329,11 +321,5 @@ const styles = StyleSheet.create({
   iconBtnText: {
     color: "#ffffff",
     fontSize: 22,
-  },
-  center: {
-    flex: 1,
-    justifyContent: "center",
-    padding: 24,
-    backgroundColor: "#ffffff",
   },
 });
