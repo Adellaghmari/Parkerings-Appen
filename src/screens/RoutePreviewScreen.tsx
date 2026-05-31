@@ -11,7 +11,7 @@ import { PrimaryButton } from "../components/PrimaryButton";
 import { distanceKm } from "../utils/distance";
 import { recommendZone, findAlternativeZone } from "../utils/recommendation";
 import { MapPin } from "../components/MapPin";
-import MapView, { Marker, Polyline, Region } from "react-native-maps";
+import { MapView, Marker, Polyline, type Region } from "../platform/maps";
 import { mapStyleDark, softMapStyle } from "../utils/mapStyle";
 import { t } from "../utils/i18n";
 
@@ -23,7 +23,7 @@ export const RoutePreviewScreen = ({ navigation }: Props) => {
   const language = useAppStore((state) => state.language);
   const theme = useAppStore((state) => state.theme);
   const [userCoords, setUserCoords] = useState<{ lat: number; lng: number }>();
-  const mapRef = useRef<MapView>(null);
+  const mapRef = useRef<any>(null);
 
   const { data: zones } = useQuery({
     queryKey: ["zones"],
